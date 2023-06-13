@@ -22,10 +22,10 @@ public class Candidate {
     @Column(name = "name")
     private String candidateName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String candidateEmail;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String candidatePassword;
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
