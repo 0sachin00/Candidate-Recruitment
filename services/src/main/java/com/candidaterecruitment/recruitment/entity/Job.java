@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.apachecommons.CommonsLog;
 
 import java.util.HashSet;
 import java.util.List;
@@ -37,5 +36,5 @@ public class Job {
     private List<String> jobSkills;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
-    private Set<AppliedJob> appliedJobs = new HashSet<AppliedJob>();
+    private Set<AppliedJob> appliedJobs = new HashSet<>();
 }
