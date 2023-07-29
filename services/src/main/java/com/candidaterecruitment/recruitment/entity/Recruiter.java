@@ -1,6 +1,7 @@
 package com.candidaterecruitment.recruitment.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,14 @@ public class Recruiter {
     @Column(name = "id")
     private String recruiterId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String recruiterName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String recruiterEmail;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
+    @Size(min = 6, max = 20)
     private String recruiterPassword;
 
     @OneToMany
