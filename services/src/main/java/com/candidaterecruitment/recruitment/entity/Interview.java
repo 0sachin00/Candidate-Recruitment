@@ -39,7 +39,7 @@ public class Interview {
     private LocalTime interviewEndTime;
 
     @Column(name = "is_scheduled")
-    private boolean interviewScheduled;
+    private boolean interviewScheduled = false;
 
     @Embedded
     @AttributeOverrides({

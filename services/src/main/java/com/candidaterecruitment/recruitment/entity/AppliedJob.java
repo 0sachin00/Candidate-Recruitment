@@ -31,11 +31,27 @@ public class AppliedJob {
     private Recruiter recruiter;
 
     @Column(name = "status")
-    private String appliedJobStatus;
+    private String appliedJobStatus = "Applied";
 
     @Column(name = "scheduled_time")
     private LocalDateTime appliedJobInterviewScheduledTime;
 
     @Column(name = "feedback")
     private String appliedJobFeedback;
+
+    @OneToOne(mappedBy = "appliedJob")
+    private Interview interview;
+
+    public void setAppliedJobStatus(String appliedJobStatus) {
+        this.appliedJobStatus = appliedJobStatus;
+        if (this.interview.isInterviewScheduled())
+            this.appliedJobStatus = "In progress";
+    }
+
+    public void setAppliedJobFeedback(String appliedJobFeedback) {
+        if(!this.appliedJobStatus.equals("Applied"))
+            this.appliedJobFeedback = appliedJobFeedback;
+        else
+            this.appliedJobStatus = null;
+    }
 }

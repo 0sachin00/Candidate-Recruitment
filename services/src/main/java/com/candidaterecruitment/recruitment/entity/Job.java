@@ -21,14 +21,14 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String jobId;
 
-    @Column(name = "company_name")
+    @Column(name = "company_name", nullable = false)
     private String jobCompany;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String jobDescription;
 
-    @Column(name = "location")
-    private String jobLocation;
+    @Column(name = "location", nullable = false)
+    private List<String> jobLocation;
 
     @Column(name = "experience")
     private int jobExperience;

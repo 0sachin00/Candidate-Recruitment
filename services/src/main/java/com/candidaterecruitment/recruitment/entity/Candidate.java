@@ -1,6 +1,7 @@
 package com.candidaterecruitment.recruitment.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,15 +20,17 @@ public class Candidate {
     @Column(name = "id")
     private String candidateId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String candidateName;
 
     @Column(name = "email", unique = true, nullable = false)
     private String candidateEmail;
 
+
     @Column(name = "password", nullable = false)
+    @Size(min = 6, max = 20)
     private String candidatePassword;
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
-    private Set<AppliedJob> appliedJobs = new HashSet<AppliedJob>();
+    private Set<AppliedJob> appliedJobs = new HashSet<>();
 }
