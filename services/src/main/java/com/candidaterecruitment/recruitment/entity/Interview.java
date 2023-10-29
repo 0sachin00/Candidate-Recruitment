@@ -47,4 +47,8 @@ public class Interview {
             @AttributeOverride(name = "feedbackMessage", column = @Column(name = "feedback_message"))
     })
     private Feedback feedback;
+
+    public boolean isInterviewScheduled() {
+        return this.interviewScheduled;
+    }
 }
