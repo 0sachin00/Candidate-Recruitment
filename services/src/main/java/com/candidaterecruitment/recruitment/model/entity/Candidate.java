@@ -1,4 +1,4 @@
-package com.candidaterecruitment.recruitment.entity;
+package com.candidaterecruitment.recruitment.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -10,29 +10,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "recruiters")
+@Table(name = "candidates")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Recruiter {
+public class Candidate {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private String recruiterId;
+    private Long candidateId;
 
     @Column(name = "name", nullable = false)
-    private String recruiterName;
+    private String candidateName;
 
-    @Column(name = "email", nullable = false)
-    private String recruiterEmail;
+    @Column(name = "email", unique = true, nullable = false)
+    private String candidateEmail;
+
 
     @Column(name = "password", nullable = false)
     @Size(min = 6, max = 20)
-    private String recruiterPassword;
+    private String candidatePassword;
 
-    @OneToMany(mappedBy = "recruiter")
-    private Set<Job> jobs = new HashSet<>();
-
-    @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private Set<AppliedJob> appliedJobs = new HashSet<>();
 }
