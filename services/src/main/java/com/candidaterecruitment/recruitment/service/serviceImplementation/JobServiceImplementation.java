@@ -1,6 +1,6 @@
 package com.candidaterecruitment.recruitment.service.serviceImplementation;
 
-import com.candidaterecruitment.recruitment.entity.Job;
+import com.candidaterecruitment.recruitment.model.entity.Job;
 import com.candidaterecruitment.recruitment.repository.JobRepository;
 import com.candidaterecruitment.recruitment.service.serviceInterface.JobServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.candidaterecruitment.recruitment.entity;
+package com.candidaterecruitment.recruitment.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

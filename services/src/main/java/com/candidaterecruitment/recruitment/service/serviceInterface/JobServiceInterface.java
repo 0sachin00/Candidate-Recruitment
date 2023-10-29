@@ -1,6 +1,6 @@
 package com.candidaterecruitment.recruitment.service.serviceInterface;
 
-import com.candidaterecruitment.recruitment.entity.Job;
+import com.candidaterecruitment.recruitment.model.entity.Job;
 
 import java.util.List;
 
