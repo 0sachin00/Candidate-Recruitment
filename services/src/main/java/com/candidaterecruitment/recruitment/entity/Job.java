@@ -30,10 +30,20 @@ public class Job {
     private List<String> jobLocation;
 
     @Column(name = "experience")
-    private int jobExperience;
+    private float jobExperience;
 
     @Column(name = "skills")
     private List<String> jobSkills;
+
+    @Column(name = "type")
+    private List<String> jobType;
+
+    @Column(name = "status")
+    private List<String> jobStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "recruiter_id")
+    private Recruiter recruiter;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
     private Set<AppliedJob> appliedJobs = new HashSet<>();

@@ -30,8 +30,7 @@ public class Recruiter {
     @Size(min = 6, max = 20)
     private String recruiterPassword;
 
-    @OneToMany
-    @JoinColumn(name = "recruiter_id")
+    @OneToMany(mappedBy = "recruiter")
     private Set<Job> jobs = new HashSet<>();
 
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL)
