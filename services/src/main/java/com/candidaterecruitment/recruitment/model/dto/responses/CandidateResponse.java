@@ -1,6 +1,6 @@
-package com.candidaterecruitment.recruitment.model.dto;
+package com.candidaterecruitment.recruitment.model.dto.responses;
 
-import com.candidaterecruitment.recruitment.model.entity.Candidate;
+import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateDetails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

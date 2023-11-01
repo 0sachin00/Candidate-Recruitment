@@ -1,4 +1,4 @@
-package com.candidaterecruitment.recruitment.model.dto;
+package com.candidaterecruitment.recruitment.model.dto.responseDetails;
 
 import lombok.Data;
 
