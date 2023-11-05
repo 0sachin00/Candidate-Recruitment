@@ -1,11 +1,11 @@
 package com.candidaterecruitment.recruitment.controller;
 
-import com.candidaterecruitment.recruitment.model.dto.CandidateDetails;
-import com.candidaterecruitment.recruitment.model.dto.CandidateRegistrationRequest;
-import com.candidaterecruitment.recruitment.model.dto.CandidateResponse;
+import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateDetails;
+import com.candidaterecruitment.recruitment.model.dto.requests.CandidateRequest;
+import com.candidaterecruitment.recruitment.model.dto.responses.CandidateResponse;
 import com.candidaterecruitment.recruitment.model.entity.Candidate;
 import com.candidaterecruitment.recruitment.service.serviceImplementation.CandidateServiceImplementation;
-import customexceptions.RegistrationException;
+import com.candidaterecruitment.recruitment.customexceptions.CandidateRegistrationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,12 +37,12 @@ public class CandidateController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerCandidate(@RequestBody CandidateRegistrationRequest request) {
+    @PostMapping("/registerCandidate")
+    public ResponseEntity<String> registerCandidate(@RequestBody CandidateRequest request) {
         try{
             Candidate registeredCandidate = candidateServiceImplementation.registerCandidate(request);
             return ResponseEntity.status(HttpStatus.CREATED).body("Candidate registered successfully. Candidate ID: " + registeredCandidate.getCandidateId());
-        }catch (RegistrationException e){
+        }catch (CandidateRegistrationException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
