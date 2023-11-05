@@ -18,7 +18,10 @@ public class Job {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String jobId;
+    private Long jobId;
+
+    @Column(name = "job_title", nullable = false)
+    private String jobTitle;
 
     @Column(name = "company_name", nullable = false)
     private String jobCompany;
@@ -27,22 +30,25 @@ public class Job {
     private String jobDescription;
 
     @Column(name = "location", nullable = false)
-    private List<String> jobLocation;
+    private String jobLocation;
 
-    @Column(name = "experience")
-    private float jobExperience;
+    @Column(name = "min_experience")
+    private float minJobExperience;
+
+    @Column(name = "max_experience")
+    private float maxJobExperience;
 
     @Column(name = "skills")
     private List<String> jobSkills;
 
     @Column(name = "type")
-    private List<String> jobType;
+    private String jobType;
 
     @Column(name = "status")
     private List<String> jobStatus;
 
     @ManyToOne
-    @JoinColumn(name = "recruiter_id")
+    @JoinColumn(name = "recruiter_id", nullable = false)
     private Recruiter recruiter;
 
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)

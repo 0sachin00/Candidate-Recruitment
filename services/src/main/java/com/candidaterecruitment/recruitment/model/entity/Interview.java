@@ -17,7 +17,7 @@ public class Interview {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private String interviewId;
+    private Long interviewId;
 
     @OneToOne
     @JoinColumn(name = "applied_job_id")
