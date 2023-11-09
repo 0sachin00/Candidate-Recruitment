@@ -1,63 +1,115 @@
 <div class="login-sec">
   <div class="container login-form-sec">
-    <form class="w-100" [formGroup]="loginForm">
+    <ng-container *ngIf="!showRegistrationForm && !showLoginForm">
       <span class="login-form-title">Welcome</span>
-      <div class="form-sec m-b-8">
-        <mat-form-field appearance="fill" class="mat-form-field-sec">
-          <mat-label class="form-label">Username</mat-label>
-          <mat-icon matPrefix class="icon-color">perm_identity</mat-icon>
-          <input
-            matInput
-            type="text"
-            formControlName="username"
-            placeholder="Enter your username"
-            [(ngModel)]="userName"
-          />
-        </mat-form-field>
+      <div class="text-sec fc">
+        <span>Login as</span>
       </div>
-      <div class="form-sec m-b-8 m-b-0">
-        <mat-form-field appearance="fill" class="mat-form-field-sec">
-          <mat-label class="form-label">Password</mat-label>
-          <mat-icon matPrefix class="icon-color">lock</mat-icon>
-          <input
-            matInput
-            class="form-input"
-            type="password"
-            formControlName="userpassword"
-            placeholder="Enter your password"
-            [(ngModel)]="passWord"
-          />
-        </mat-form-field>
-      </div>
-      <div class="forgot-pass" (click)="forgotPassword()">
-        <a>Forgot password?</a>
-      </div>
-      <div class="error-msg">
-        <p *ngIf="!validLogin">Please enter valid username/password</p>
-      </div>
-      <div class="form-btn d-flex justify-content-center">
-        <button
-          mat-raised-button
-          [disabled]="!loginForm.valid"
-          (click)="login()"
-        >
-          <span>Login</span>
-        </button>
-      </div>
-      <div class="text-sec">
-        <span>Or Sign Up Using</span>
-      </div>
-      <div class="social-icons d-flex justify-content-center m-t-1">
-        <a href="#" class="social-item bg1">
-          <i class="fa fa-facebook"></i>
-        </a>
-        <a href="#" class="social-item bg2">
-          <i class="fa fa-twitter"></i>
-        </a>
-        <a href="#" class="social-item bg3">
-          <i class="fa fa-google"></i>
+      <div class="login-sec-category" *ngFor="let category of categoryArr">
+        <a class="o-primary-button category-btn" (click)="loginForCategory(category)">
+          {{category}}
         </a>
       </div>
-    </form>
+    </ng-container>
+    <ng-container *ngIf="showLoginForm">
+      <div class="d-flex justify-content-start mt-4 mb-4 align-items-center" >
+        <i class="fa fa-arrow-left mr-2 icon-cursor" aria-hidden="true" (click)="showLoginForm = !showLoginForm"></i>
+        <span class="login-form-title fs-34 m-0">Login as {{selectedCategory}}</span>
+      </div>
+      
+      <form [formGroup]="loginForm" class="registration-form">
+        <div class="registration-form-group -first-col">
+          <label class="registration-form-label ">UsernameId/Email<span
+              class="required"></span></label>
+          <div class="input-div">
+            <input type="text" class="o-input__input " placeholder="Enter your username"
+              formControlName="username" />
+          </div>
+        </div>
+        <div class="registration-form-group -first-col">
+          <label class="registration-form-label ">Password<span
+              class="required"></span></label>
+          <div class="input-div">
+            <input type="text" class="o-input__input " placeholder="Enter your password"
+              formControlName="userpassword" />
+          </div>
+        </div>       
+      </form>
+      <a class="o-primary-button register-btn" (click)="login(selectedCategory)" [ngClass]="{'-disabled': !loginForm.valid}">
+        Login
+       </a>
+       <div class="text-sec">
+        <span class="fc">Don't have an account ? <a class="sign-up-btn icon-cursor" (click)="registerCategoryForSignUp()">Sign Up</a></span>
+      </div>
+      
+    </ng-container>
+    <ng-container *ngIf="showRegistrationForm">
+      <div class="d-flex justify-content-start mt-4 mb-4 align-items-center" >
+        <i class="fa fa-arrow-left mr-2 icon-cursor" aria-hidden="true" (click)="hideRegistrationForm()"></i>
+        <span class="login-form-title fs-34 m-0">Create an account</span>
+      </div>
+      
+      <form [formGroup]="registrationFormForCategory" class="registration-form">
+        <div class="registration-form-group -first-col">
+          <label class="registration-form-label ">Username<span
+              class="required">*</span></label>
+          <div class="input-div">
+            <input type="text" class="o-input__input " placeholder="Enter your name"
+              formControlName="name" />
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('name')?.hasError('required') && registrationFormForCategory.get('name')?.touched">
+            <p>Username is required.</p>
+          </div>
+        </div>
+        <div class="registration-form-group -second-col">
+          <label class="registration-form-label ">Email<span
+              class="required">*</span></label>
+          <div class="input-div">
+            <input type="text" class="o-input__input " placeholder="Enter your email id"
+              formControlName="email" />
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('email')?.hasError('email') && registrationFormForCategory.get('email')?.touched">
+            <p>Please enter a valid email address.</p>
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('email')?.hasError('required') && registrationFormForCategory.get('email')?.touched">
+            <p>Email is required.</p>
+          </div>
+        </div>
+        <div class="registration-form-group -first-col">
+          <label class="registration-form-label ">Password<span
+              class="required">*</span></label>
+          <div class="input-div password-input">
+            <input type="{{ showPassword ? 'text' : 'password' }}" class="o-input__input " placeholder="Enter your password"
+              formControlName="password" />
+              <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}" (click)="togglePasswordVisibility()"></i>
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('password')?.hasError('required') && registrationFormForCategory.get('password')?.touched">
+            <p>Password is required.</p>
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('password')?.hasError('minlength')">
+            <p>Password must be at least 8 characters long.</p>
+          </div>
+        </div>
+        
+
+        <div class="registration-form-group -second-col">
+          <label class="registration-form-label ">Confirm Password<span
+              class="required">*</span></label>
+          <div class="input-div">
+            <input type="text" class="o-input__input " placeholder="Enter your password again"
+              formControlName="confirmPassword" />
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.get('confirmPassword')?.hasError('required') && registrationFormForCategory.get('confirmPassword')?.touched">
+            <p>Confirm Password is required.</p>
+          </div>
+          <div class="error" *ngIf="registrationFormForCategory.hasError('passwordMismatch') && registrationFormForCategory.get('confirmPassword')?.touched">
+            <p>Passwords do not match.</p>
+          </div>
+        </div>       
+      </form>
+      <a class="o-primary-button register-btn" (click)="register(selectedCategory)" [ngClass]="{'-disabled': !registrationFormForCategory.valid}">
+        Register
+       </a>
+    </ng-container>
   </div>
 </div>

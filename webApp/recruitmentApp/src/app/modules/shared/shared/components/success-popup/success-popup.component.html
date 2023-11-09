@@ -1,4 +1,12 @@
-<div class="c-success-modal d-flex justify-content-center">
-    <img class="c-success-modal__img" src="./assets/images/check-circle.svg" alt="check">
-    <p class="suc-msg">{{successMsg}}</p>
+<div class="c-success-modal d-flex justify-content-center min-ht">
+    <div  id="success-modal" class="c-success-modal d-flex justify-content-center">
+        <div class="d-flex">
+            <i class="fa fa-times icon-cursor close-icon" aria-hidden="true" (click)="closePopup()" ></i>
+            <div class="content-p d-flex justify-content-center">
+                <img class="c-success-modal__img" src="./assets/images/check-circle.svg" alt="check">
+                <p class="suc-msg">{{successMsg}}</p>
+            </div>
+        </div>
+    </div>
+    
 </div>

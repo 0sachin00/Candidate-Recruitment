@@ -11,6 +11,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomMaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,9 +28,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CoreModule,
     CustomMaterialModule,
     ReactiveFormsModule,
+    NgxSpinnerModule,
     FormsModule,
   ],
-  providers: [AuthGuard],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true
+    },
+   AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
