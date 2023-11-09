@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "candidates")
@@ -16,9 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class Candidate {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long candidateId;
+    private UUID candidateId;
 
     @Column(name = "name", nullable = false)
     private String candidateName;
