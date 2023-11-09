@@ -2,6 +2,7 @@ package com.candidaterecruitment.recruitment.controller;
 
 import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateDetails;
 import com.candidaterecruitment.recruitment.model.dto.requests.CandidateRequest;
+import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateRegistrationDetails;
 import com.candidaterecruitment.recruitment.model.dto.responses.CandidateResponse;
 import com.candidaterecruitment.recruitment.model.entity.Candidate;
 import com.candidaterecruitment.recruitment.service.serviceImplementation.CandidateServiceImplementation;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/candidates")
 public class CandidateController {
@@ -38,12 +40,18 @@ public class CandidateController {
     }
 
     @PostMapping("/registerCandidate")
-    public ResponseEntity<String> registerCandidate(@RequestBody CandidateRequest request) {
+    public ResponseEntity<CandidateRegistrationDetails> registerCandidate(@RequestBody CandidateRequest request) {
         try{
             Candidate registeredCandidate = candidateServiceImplementation.registerCandidate(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Candidate registered successfully. Candidate ID: " + registeredCandidate.getCandidateId());
+            CandidateRegistrationDetails response = new CandidateRegistrationDetails();
+            response.setMessage("Candidate registered successfully. Candidate ID: " + registeredCandidate.getCandidateId());
+            response.setStatusCode(String.valueOf(200));
+            return ResponseEntity.ok(response);
         }catch (CandidateRegistrationException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            CandidateRegistrationDetails response = new CandidateRegistrationDetails();
+            response.setMessage(e.getMessage());
+            response.setStatusCode(String.valueOf(409));
+            return ResponseEntity.ok(response);
         }
     }
 }

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from '../material.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -18,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatIconModule,
     CustomMaterialModule,
     MatFormFieldModule,
+    HttpClientModule
   ],
 })
 export class CoreModule {}

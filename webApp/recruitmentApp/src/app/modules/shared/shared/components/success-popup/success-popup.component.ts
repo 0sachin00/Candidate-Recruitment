@@ -16,12 +16,9 @@ export class SuccessPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.successMsg = this.data?.successMsg ? this.data?.successMsg : '';
-    this.closePopup();
   }
 
   closePopup(): void {
-    setInterval(() => {
-      this.matDialogRef.close({ closeStatus: 'closed' });
-    }, 2000);
+    this.matDialogRef.close({ closeStatus: 'closed' });
   }
 }
