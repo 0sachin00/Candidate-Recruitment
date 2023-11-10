@@ -1,0 +1,6 @@
+webApp/recruitmentApp/.angular
+webApp/recruitmentApp/node_modules
+.idea
+.vscode
+*.class
+webApp/recruitmentApp/package-lock.json

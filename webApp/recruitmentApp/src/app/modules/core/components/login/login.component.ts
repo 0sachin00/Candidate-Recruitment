@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 import { SuccessPopupComponent } from 'src/app/modules/shared/shared/components/success-popup/success-popup.component';
-import { HarcodedAuthenticationService } from '../../service/harcoded-authentication.service';
-import { CandidateRegistrationRequest } from '../../models/request-model';
+import { HardcodedAuthenticationService } from '../../service/harcoded-authentication.service';
+import {
+  CandidateRegistrationRequest,
+  RecruiterRegistrationRequest,
+} from '../../models/request-model';
 import { AuthenticationService } from '../../service/authentication.service';
-import { CandidateRegistrationResponse } from '../../models/response.model';
+import { RegistrationResponse } from '../../models/response.model';
 
 @Component({
   selector: 'app-login',
@@ -23,11 +31,11 @@ export class LoginComponent implements OnInit {
     userpassword: ['', Validators.required],
   });
   registrationFormForCategory!: FormGroup;
-  categoryArr: string[] = ['Candidate','Recruiter','Interviewer'];
+  categoryArr: string[] = ['Candidate', 'Recruiter', 'Interviewer'];
   showRegistrationForm: boolean = false;
-  selectedDropdown: string  ='';
+  selectedDropdown: string = '';
   showLoginForm: boolean = false;
-  selectedCategory: string  = '';
+  selectedCategory: string = '';
   showPassword: boolean = false;
   showSuccessModal: boolean = false;
 
@@ -35,16 +43,21 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     public matDialog: MatDialog,
     private router: Router,
-    public harcodedAuthenticationService: HarcodedAuthenticationService,
-    private authenticationService: AuthenticationService) { 
-      this.initialiseRegistrationForm();
-    }
-
-  ngOnInit(): void {
+    public hardcodedAuthenticationService: HardcodedAuthenticationService,
+    private authenticationService: AuthenticationService
+  ) {
+    this.initialiseRegistrationForm();
   }
 
-  login1(): void{
-    if (this.harcodedAuthenticationService.authenticateUser(this.userName?.toLowerCase() ,  this.passWord?.toLowerCase())) {
+  ngOnInit(): void {}
+
+  login1(): void {
+    if (
+      this.hardcodedAuthenticationService.authenticateUser(
+        this.userName?.toLowerCase(),
+        this.passWord?.toLowerCase()
+      )
+    ) {
       this.validLogin = true;
       const dialogRef = this.matDialog.open(SuccessPopupComponent, {
         width: '744px',
@@ -72,22 +85,29 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  initialiseRegistrationForm(): void{
-    this.registrationFormForCategory = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]]
-    }, {
-      validators: this.passwordMatchValidator
-    });
+  initialiseRegistrationForm(): void {
+    this.registrationFormForCategory = this.fb.group(
+      {
+        name: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      {
+        validators: this.passwordMatchValidator,
+      }
+    );
   }
 
-  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  passwordMatchValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-    return password && confirmPassword && password.value !== confirmPassword.value
-      ? { 'passwordMismatch': true }
+    return password &&
+      confirmPassword &&
+      password.value !== confirmPassword.value
+      ? { passwordMismatch: true }
       : null;
   }
 
@@ -95,12 +115,12 @@ export class LoginComponent implements OnInit {
     alert('Forgot Password');
   }
 
-  loginForCategory(selectedCategory: string): void{
+  loginForCategory(selectedCategory: string): void {
     this.selectedCategory = selectedCategory;
     this.showLoginForm = true;
   }
 
-  login(selectedCategory: string): void{
+  login(selectedCategory: string): void {
     switch (selectedCategory.toLowerCase()) {
       case 'candidate':
         this.loginAsCandidate();
@@ -111,52 +131,108 @@ export class LoginComponent implements OnInit {
       case 'interviewer':
         this.loginAsInterviewer();
         break;
-    
+
       default:
         break;
     }
-    
   }
 
-  loginAsCandidate(): void{
+  loginAsCandidate(): void {
     alert('loginAsCandidate');
   }
 
-  loginAsRecruiter(): void{
+  loginAsRecruiter(): void {
     alert('loginAsRecruiter');
   }
 
-  loginAsInterviewer(): void{
+  loginAsInterviewer(): void {
     alert('loginAsInterviewer');
   }
 
-  registerCategoryForSignUp(): void{
+  registerCategoryForSignUp(): void {
     this.initialiseRegistrationForm();
     this.showRegistrationForm = true;
     this.showLoginForm = !this.showLoginForm;
   }
 
-  register(categorySelected: string): void{
-    if(categorySelected.toLowerCase() === 'candidate'){
-      const payload: CandidateRegistrationRequest ={
-        candidateName: this.registrationFormForCategory.controls['name'].value,
-        candidateEmail: this.registrationFormForCategory.controls['email'].value,
-        candidatePassword: btoa(unescape(encodeURIComponent(this.registrationFormForCategory.controls['password'].value))),
-      }
-      this.authenticationService.registerCandidate(payload).subscribe((res: CandidateRegistrationResponse)=>{
-       if((res.message.toLowerCase()).includes('candidate registered successfully') && res.statusCode === '200' ){
-        this.showSuccessModal = true;
-        this.openTheDialog('You have Registered successfully. Please go to login page & sign in with your credentials');
-       }else{
-        this.showSuccessModal = false;
-        alert('Something went wrong!');
-       }
-      });
+  register(categorySelected: string): void {
+    switch (categorySelected.toLowerCase()) {
+      case 'candidate':
+        this.candidateRegistration();
+        break;
+      case 'recruiter':
+        this.recruiterRegistration();
+        break;
+      default:
+        break;
     }
-    
   }
 
-  hideRegistrationForm(): void{
+  candidateRegistration(): void {
+    const payload: CandidateRegistrationRequest = {
+      candidateName: this.registrationFormForCategory.controls['name'].value,
+      candidateEmail: this.registrationFormForCategory.controls['email'].value,
+      candidatePassword: btoa(
+        unescape(
+          encodeURIComponent(
+            this.registrationFormForCategory.controls['password'].value
+          )
+        )
+      ),
+    };
+    this.authenticationService
+      .registerCandidate(payload)
+      .subscribe((res: RegistrationResponse) => {
+        if (
+          res.message
+            .toLowerCase()
+            .includes('candidate registered successfully') &&
+          res.statusCode === '200'
+        ) {
+          this.showSuccessModal = true;
+          this.openTheDialog(
+            'You have Registered successfully. Please go to login page & sign in with your credentials'
+          );
+        } else {
+          this.showSuccessModal = false;
+          alert('Something went wrong!');
+        }
+      });
+  }
+
+  recruiterRegistration(): void {
+    const payload: RecruiterRegistrationRequest = {
+      recruiterName: this.registrationFormForCategory.controls['name'].value,
+      recruiterEmail: this.registrationFormForCategory.controls['email'].value,
+      recruiterPassword: btoa(
+        unescape(
+          encodeURIComponent(
+            this.registrationFormForCategory.controls['password'].value
+          )
+        )
+      ),
+    };
+    this.authenticationService
+      .registerRecruiter(payload)
+      .subscribe((res: RegistrationResponse) => {
+        if (
+          res.message
+            .toLowerCase()
+            .includes('recruiter registered successfully') &&
+          res.statusCode === '200'
+        ) {
+          this.showSuccessModal = true;
+          this.openTheDialog(
+            'You have Registered successfully. Please go to login page & sign in with your credentials'
+          );
+        } else {
+          this.showSuccessModal = false;
+          alert('Something went wrong!');
+        }
+      });
+  }
+
+  hideRegistrationForm(): void {
     this.showRegistrationForm = false;
     this.showLoginForm = true;
   }
@@ -165,13 +241,13 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  openTheDialog(msgToDisplay: string): void{
+  openTheDialog(msgToDisplay: string): void {
     const dialogRef = this.matDialog.open(SuccessPopupComponent, {
       width: '744px',
       panelClass: 'success-popup-container',
       disableClose: true,
       data: {
-        successMsg: msgToDisplay
+        successMsg: msgToDisplay,
       },
     });
     dialogRef.afterClosed().subscribe((result: any) => {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { HarcodedAuthenticationService } from 'src/app/modules/core/service/harcoded-authentication.service';
+import { HardcodedAuthenticationService } from 'src/app/modules/core/service/harcoded-authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -12,14 +12,14 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSideNavEvent = new EventEmitter();
 
   constructor(
-    private harcodedAuthenticationService: HarcodedAuthenticationService,
+    private HardcodedAuthenticationService: HardcodedAuthenticationService,
     private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   signOut(): void {
-    this.harcodedAuthenticationService.removeSessionToLogOut();
+    this.HardcodedAuthenticationService.removeSessionToLogOut();
     this.router.navigate(['accounts']);
   }
   toggleSideNav(): void {

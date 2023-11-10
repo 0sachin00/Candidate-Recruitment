@@ -1,4 +1,4 @@
-export interface CandidateRegistrationResponse{
-    "message": string;
-    "statusCode": string;
+export interface RegistrationResponse {
+  message: string;
+  statusCode: string;
 }

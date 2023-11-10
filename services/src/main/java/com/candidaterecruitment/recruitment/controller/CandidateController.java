@@ -1,14 +1,13 @@
 package com.candidaterecruitment.recruitment.controller;
 
-import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateDetails;
-import com.candidaterecruitment.recruitment.model.dto.requests.CandidateRequest;
-import com.candidaterecruitment.recruitment.model.dto.responseDetails.CandidateRegistrationDetails;
-import com.candidaterecruitment.recruitment.model.dto.responses.CandidateResponse;
+import com.candidaterecruitment.recruitment.model.dto.responsedetails.getresponsedetails.CandidateGetResponseDetails;
+import com.candidaterecruitment.recruitment.model.dto.postrequests.CandidateRequest;
+import com.candidaterecruitment.recruitment.model.dto.responsedetails.postresponsedetails.CandidatePostResponseDetails;
+import com.candidaterecruitment.recruitment.model.dto.getresponses.CandidateResponse;
 import com.candidaterecruitment.recruitment.model.entity.Candidate;
 import com.candidaterecruitment.recruitment.service.serviceImplementation.CandidateServiceImplementation;
 import com.candidaterecruitment.recruitment.customexceptions.CandidateRegistrationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +24,9 @@ public class CandidateController {
     @GetMapping("/allCandidates")
     public ResponseEntity<CandidateResponse> getCandidateDetails(){
         List<Candidate> candidates = candidateServiceImplementation.getAllCandidates();
-        List<CandidateDetails> responseList = candidates.stream()
+        List<CandidateGetResponseDetails> responseList = candidates.stream()
                 .map(candidate -> {
-                    CandidateDetails response = new CandidateDetails();
+                    CandidateGetResponseDetails response = new CandidateGetResponseDetails();
                     response.setId(candidate.getCandidateId());
                     response.setCandidateName(candidate.getCandidateName());
                     response.setCandidateEmail(candidate.getCandidateEmail());
@@ -40,15 +39,15 @@ public class CandidateController {
     }
 
     @PostMapping("/registerCandidate")
-    public ResponseEntity<CandidateRegistrationDetails> registerCandidate(@RequestBody CandidateRequest request) {
+    public ResponseEntity<CandidatePostResponseDetails> registerCandidate(@RequestBody CandidateRequest request) {
         try{
             Candidate registeredCandidate = candidateServiceImplementation.registerCandidate(request);
-            CandidateRegistrationDetails response = new CandidateRegistrationDetails();
+            CandidatePostResponseDetails response = new CandidatePostResponseDetails();
             response.setMessage("Candidate registered successfully. Candidate ID: " + registeredCandidate.getCandidateId());
             response.setStatusCode(String.valueOf(200));
             return ResponseEntity.ok(response);
         }catch (CandidateRegistrationException e){
-            CandidateRegistrationDetails response = new CandidateRegistrationDetails();
+            CandidatePostResponseDetails response = new CandidatePostResponseDetails();
             response.setMessage(e.getMessage());
             response.setStatusCode(String.valueOf(409));
             return ResponseEntity.ok(response);
