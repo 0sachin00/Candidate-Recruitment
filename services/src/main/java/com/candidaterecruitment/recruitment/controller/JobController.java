@@ -1,9 +1,9 @@
 package com.candidaterecruitment.recruitment.controller;
 
 import com.candidaterecruitment.recruitment.customexceptions.JobCreationException;;
-import com.candidaterecruitment.recruitment.model.dto.requests.JobRequest;
-import com.candidaterecruitment.recruitment.model.dto.responseDetails.JobDetails;
-import com.candidaterecruitment.recruitment.model.dto.responses.JobResponse;
+import com.candidaterecruitment.recruitment.model.dto.postrequests.JobRequest;
+import com.candidaterecruitment.recruitment.model.dto.responsedetails.getresponsedetails.JobGetResponseDetails;
+import com.candidaterecruitment.recruitment.model.dto.getresponses.JobResponse;
 import com.candidaterecruitment.recruitment.model.entity.Job;
 import com.candidaterecruitment.recruitment.service.serviceImplementation.JobServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +23,24 @@ public class JobController {
     @GetMapping("/allJobs")
     public ResponseEntity<JobResponse> getAllJobDetails(){
         List<Job> jobs = jobServiceImplementation.getAllJobs();
-        List<JobDetails> jobDetails = jobs.stream()
+        List<JobGetResponseDetails> jobGetResponseDetails = jobs.stream()
                 .map(job -> {
-                    JobDetails jobDetails1 = new JobDetails();
-                    jobDetails1.setJobId(job.getJobId());
-                    jobDetails1.setJobTitle(job.getJobTitle());
-                    jobDetails1.setJobCompany(job.getJobCompany());
-                    jobDetails1.setJobDescription(job.getJobDescription());
-                    jobDetails1.setJobLocation(job.getJobLocation());
-                    jobDetails1.setMinJobExperience(job.getMinJobExperience());
-                    jobDetails1.setMaxJobExperience(job.getMaxJobExperience());
-                    jobDetails1.setJobSkills(job.getJobSkills());
-                    jobDetails1.setJobType(job.getJobType());
-                    jobDetails1.setRecruiterId(job.getRecruiter().getRecruiterId());
-                    return jobDetails1;
+                    JobGetResponseDetails jobGetResponseDetails1 = new JobGetResponseDetails();
+                    jobGetResponseDetails1.setJobId(job.getJobId());
+                    jobGetResponseDetails1.setJobTitle(job.getJobTitle());
+                    jobGetResponseDetails1.setJobCompany(job.getJobCompany());
+                    jobGetResponseDetails1.setJobDescription(job.getJobDescription());
+                    jobGetResponseDetails1.setJobLocation(job.getJobLocation());
+                    jobGetResponseDetails1.setMinJobExperience(job.getMinJobExperience());
+                    jobGetResponseDetails1.setMaxJobExperience(job.getMaxJobExperience());
+                    jobGetResponseDetails1.setJobSkills(job.getJobSkills());
+                    jobGetResponseDetails1.setJobType(job.getJobType());
+                    jobGetResponseDetails1.setRecruiterId(job.getRecruiter().getRecruiterId());
+                    return jobGetResponseDetails1;
                 })
                 .collect(Collectors.toList());
         JobResponse jobResponse = new JobResponse();
-        jobResponse.setRes(jobDetails);
+        jobResponse.setRes(jobGetResponseDetails);
         return ResponseEntity.ok(jobResponse);
     }
 

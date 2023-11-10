@@ -1,4 +1,4 @@
-package com.candidaterecruitment.recruitment.model.dto.requests;
+package com.candidaterecruitment.recruitment.model.dto.postrequests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

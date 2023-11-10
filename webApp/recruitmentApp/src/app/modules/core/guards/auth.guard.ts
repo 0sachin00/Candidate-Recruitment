@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { HarcodedAuthenticationService } from '../service/harcoded-authentication.service';
+import { HardcodedAuthenticationService } from '../service/harcoded-authentication.service';
 // import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,12 +15,12 @@ import { HarcodedAuthenticationService } from '../service/harcoded-authenticatio
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
-    private harcodedAuthenticationService: HarcodedAuthenticationService
+    private hardcodedAuthenticationService: HardcodedAuthenticationService
   ) {}
   canActivate() {
-    if (!this.harcodedAuthenticationService.loggedinSession()) {
+    if (!this.hardcodedAuthenticationService.loggedinSession()) {
       this.router.navigate(['accounts']);
     }
-    return this.harcodedAuthenticationService.loggedinSession();
+    return this.hardcodedAuthenticationService.loggedinSession();
   }
 }

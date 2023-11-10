@@ -1,7 +1,7 @@
 package com.candidaterecruitment.recruitment.service.serviceImplementation;
 
 import com.candidaterecruitment.recruitment.customexceptions.JobCreationException;
-import com.candidaterecruitment.recruitment.model.dto.requests.JobRequest;
+import com.candidaterecruitment.recruitment.model.dto.postrequests.JobRequest;
 import com.candidaterecruitment.recruitment.model.entity.Job;
 import com.candidaterecruitment.recruitment.model.entity.Recruiter;
 import com.candidaterecruitment.recruitment.repository.JobRepository;

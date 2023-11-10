@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NAV_MENU } from '../app/constants/app-constants';
-import { HarcodedAuthenticationService } from './modules/core/service/harcoded-authentication.service';
+import { HardcodedAuthenticationService } from './modules/core/service/harcoded-authentication.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,10 +15,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private harcodedAuthenticationService: HarcodedAuthenticationService
+    private HardcodedAuthenticationService: HardcodedAuthenticationService
   ) {}
   ngOnInit(): void {
-    this.harcodedAuthenticationService.removeSessionToLogOut();
+    this.HardcodedAuthenticationService.removeSessionToLogOut();
     const activeMenu = this.menuItems[0].subMenus.find(
       (eachSubMenu: any) => eachSubMenu?.id === 1
     );
