@@ -1,6 +1,6 @@
 package com.candidaterecruitment.recruitment.service.serviceImplementation;
 
-import com.candidaterecruitment.recruitment.model.dto.requests.CandidateRequest;
+import com.candidaterecruitment.recruitment.model.dto.postrequests.CandidateRequest;
 import com.candidaterecruitment.recruitment.model.entity.Candidate;
 import com.candidaterecruitment.recruitment.repository.CandidateRepository;
 import com.candidaterecruitment.recruitment.customexceptions.CandidateRegistrationException;

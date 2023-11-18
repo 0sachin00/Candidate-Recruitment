@@ -1,15 +1,12 @@
-package com.candidaterecruitment.recruitment.model.dto.requests;
+package com.candidaterecruitment.recruitment.model.dto.responsedetails.getresponsedetails;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class JobRequest {
+public class JobGetResponseDetails {
+    private long jobId;
     private String jobTitle;
     private String jobCompany;
     private String jobDescription;

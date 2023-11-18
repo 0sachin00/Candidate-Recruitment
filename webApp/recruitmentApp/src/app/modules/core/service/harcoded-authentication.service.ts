@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class HarcodedAuthenticationService {
+export class HardcodedAuthenticationService {
   constructor() {}
 
   authenticateUser(userName: string, password: string): boolean {
