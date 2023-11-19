@@ -18,7 +18,7 @@ public class Job {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long jobId;
+    private String jobId;
 
     @Column(name = "job_title", nullable = false)
     private String jobTitle;

@@ -1,10 +1,12 @@
 package com.candidaterecruitment.recruitment.model.entity;
 
+import com.candidaterecruitment.recruitment.idgenerator.IdentifiableEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +16,12 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Candidate {
+public class Candidate implements IdentifiableEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "custom-id")
+    @GenericGenerator(name = "custom-id", strategy = "com.candidaterecruitment.recruitment.idgenerator.CustomIdGenerator")
     @Column(name = "id")
-    private Long candidateId;
+    private String candidateId;
 
     @Column(name = "name", nullable = false)
     private String candidateName;
@@ -33,4 +36,10 @@ public class Candidate {
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private Set<AppliedJob> appliedJobs = new HashSet<>();
+
+    @Override
+    public String getIdPrefix() {
+        return "C";
+    }
+
 }

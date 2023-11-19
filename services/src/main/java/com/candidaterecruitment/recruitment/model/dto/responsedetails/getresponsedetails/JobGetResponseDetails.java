@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class JobGetResponseDetails {
-    private long jobId;
+    private String jobId;
     private String jobTitle;
     private String jobCompany;
     private String jobDescription;
@@ -15,5 +15,5 @@ public class JobGetResponseDetails {
     private float maxJobExperience;
     private List<String> jobSkills;
     private String jobType;
-    private Long recruiterId;
+    private String recruiterId;
 }
