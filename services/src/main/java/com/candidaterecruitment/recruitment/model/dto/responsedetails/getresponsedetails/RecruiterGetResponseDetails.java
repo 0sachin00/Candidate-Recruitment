@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RecruiterGetResponseDetails {
-    private Long id;
+    private String id;
     private String recruiterName;
     private String recruiterEmail;
 }

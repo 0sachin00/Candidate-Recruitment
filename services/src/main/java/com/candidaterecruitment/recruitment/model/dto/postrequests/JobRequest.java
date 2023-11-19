@@ -18,5 +18,5 @@ public class JobRequest {
     private float maxJobExperience;
     private List<String> jobSkills;
     private String jobType;
-    private Long recruiterId;
+    private String recruiterId;
 }
