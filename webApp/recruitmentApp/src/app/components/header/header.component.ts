@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { HardcodedAuthenticationService } from 'src/app/modules/core/service/harcoded-authentication.service';
 
 @Component({
@@ -9,14 +9,24 @@ import { HardcodedAuthenticationService } from 'src/app/modules/core/service/har
 })
 export class HeaderComponent implements OnInit {
   userDropdown: boolean = false;
+  userName: string | null = 'User' as string;
+  category: string = '';
   @Output() toggleSideNavEvent = new EventEmitter();
 
   constructor(
     private HardcodedAuthenticationService: HardcodedAuthenticationService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(sessionStorage.getItem('authenticatedUser') != null){
+      this.userName = sessionStorage.getItem('authenticatedUser') ? sessionStorage.getItem('authenticatedUser') : 'User';
+    }
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.category =  params['category'];
+    });
+  }
 
   signOut(): void {
     this.HardcodedAuthenticationService.removeSessionToLogOut();

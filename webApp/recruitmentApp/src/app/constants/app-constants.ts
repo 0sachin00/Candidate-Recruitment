@@ -1,8 +1,9 @@
 export const NAV_MENU = {
-  MENU_ITEMS: [
+  MENU_ITEMS_FOR_CANDIDATE: [
     {
-      menuID: 'menu1',
+      menuID: '1',
       parentMenu: 'My Dashboard',
+      category: 'Candidate',
       subMenus: [
         {
           id: 1,
@@ -34,4 +35,29 @@ export const NAV_MENU = {
       ],
     },
   ],
+  MENU_ITEMS_FOR_RECRUITER: [{
+    menuID: '2',
+    parentMenu: 'My Dashboard',
+    category: 'Recruiter',
+    subMenus: [
+      {
+        id: 1,
+        name: 'Post a Job',
+        status: false,
+        icon: 'home',
+        altValue: 'Post a Job',
+        routerUrl: '/app/landing-page',
+        parentMenu: 'My Dashboard',
+      },
+      {
+        id: 2,
+        name: 'Jobs Posted',
+        status: false,
+        icon: 'home',
+        altValue: 'Jobs Posted',
+        routerUrl: '/app/landing-page',
+        parentMenu: 'My Dashboard',
+      }
+    ],
+  }],
 };

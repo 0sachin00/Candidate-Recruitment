@@ -14,7 +14,7 @@ import {
   CandidateRegistrationRequest,
   RecruiterRegistrationRequest,
 } from '../../models/request-model';
-import { AuthenticationService } from '../../service/authentication.service';
+import { CoreService } from '../../service/authentication.service';
 import { RegistrationResponse } from '../../models/response.model';
 
 @Component({
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     public matDialog: MatDialog,
     private router: Router,
     public hardcodedAuthenticationService: HardcodedAuthenticationService,
-    private authenticationService: AuthenticationService
+    private coreService: CoreService
   ) {
     this.initialiseRegistrationForm();
   }
@@ -138,11 +138,20 @@ export class LoginComponent implements OnInit {
   }
 
   loginAsCandidate(): void {
-    alert('loginAsCandidate');
+    sessionStorage.setItem('loggedin', JSON.stringify(true));
+    sessionStorage.setItem('authenticatedUser', this.loginForm.controls['username'].value);
+    sessionStorage.setItem('role', 'candidate');
+    this.coreService.triggerMethod();
+    this.router.navigate(['landing-page'], { queryParams: { category: 'Candidate' } });
+
   }
 
   loginAsRecruiter(): void {
-    alert('loginAsRecruiter');
+    sessionStorage.setItem('loggedin', JSON.stringify(true));
+    sessionStorage.setItem('authenticatedUser', this.loginForm.controls['username'].value);
+    sessionStorage.setItem('role', 'recruiter');
+    this.coreService.triggerMethod();
+    this.router.navigate(['landing-page'], { queryParams: { category: 'Recruiter' } });
   }
 
   loginAsInterviewer(): void {
@@ -180,7 +189,7 @@ export class LoginComponent implements OnInit {
         )
       ),
     };
-    this.authenticationService
+    this.coreService
       .registerCandidate(payload)
       .subscribe((res: RegistrationResponse) => {
         if (
@@ -193,6 +202,7 @@ export class LoginComponent implements OnInit {
           this.openTheDialog(
             'You have Registered successfully. Please go to login page & sign in with your credentials'
           );
+          this.showPassword = false;
         } else {
           this.showSuccessModal = false;
           alert('Something went wrong!');
@@ -212,7 +222,7 @@ export class LoginComponent implements OnInit {
         )
       ),
     };
-    this.authenticationService
+    this.coreService
       .registerRecruiter(payload)
       .subscribe((res: RegistrationResponse) => {
         if (
@@ -225,6 +235,7 @@ export class LoginComponent implements OnInit {
           this.openTheDialog(
             'You have Registered successfully. Please go to login page & sign in with your credentials'
           );
+          this.showPassword = false;
         } else {
           this.showSuccessModal = false;
           alert('Something went wrong!');
