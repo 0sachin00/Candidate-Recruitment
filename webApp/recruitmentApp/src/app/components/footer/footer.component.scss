@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
 footer{
     font-family: "Arvo";
+    box-shadow: 0 0 7px #0000001f;
+    position: sticky;
+    bottom: 0;
+    z-index: 106;
+    border-top: 1px solid #c7c7c7;
+    min-width: 768px;
+    background-color: #fff;
 }
-footer.footer-transparent {
-    border: none;
-}
+
 footer.footer {
     padding: 0.8rem;
 }

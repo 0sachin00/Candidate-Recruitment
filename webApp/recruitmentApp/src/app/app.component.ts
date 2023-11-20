@@ -3,26 +3,28 @@ import { Router } from '@angular/router';
 
 import { NAV_MENU } from '../app/constants/app-constants';
 import { HardcodedAuthenticationService } from './modules/core/service/harcoded-authentication.service';
+import { CoreService } from './modules/core/service/authentication.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  isShowing: boolean = false;
+  isShowing: boolean = true;
   @ViewChild('sidenav', { static: false }) sidenav?: ElementRef;
-  menuItems: any[] = NAV_MENU.MENU_ITEMS;
+  menuItems: any[] = [];
 
   constructor(
     public router: Router,
-    private HardcodedAuthenticationService: HardcodedAuthenticationService
+    private coreService: CoreService
   ) {}
   ngOnInit(): void {
-    this.HardcodedAuthenticationService.removeSessionToLogOut();
-    const activeMenu = this.menuItems[0].subMenus.find(
-      (eachSubMenu: any) => eachSubMenu?.id === 1
-    );
-    this.activateSubMenu(activeMenu);
+    // this.HardcodedAuthenticationService.removeSessionToLogOut();
+    this.checkForMenuList();
+    //below method is triggered when user logs in
+    this.coreService.getMethodTrigger().subscribe(() => {
+      this.checkForMenuList();
+    });
   }
 
   toggleSidenav() {
@@ -45,4 +47,21 @@ export class AppComponent implements OnInit {
       });
     });
   }
+
+  checkForMenuList(): void {
+    switch (sessionStorage.getItem('role')?.toLowerCase()) { 
+      case 'candidate':
+        this.menuItems = NAV_MENU.MENU_ITEMS_FOR_CANDIDATE;
+        break;
+      case 'recruiter':
+        this.menuItems = NAV_MENU.MENU_ITEMS_FOR_RECRUITER;
+        break; 
+    }
+    this.isShowing = true;
+    const activeMenu = this.menuItems[0]?.subMenus.find(
+      (eachSubMenu: any) => eachSubMenu?.id === 1
+    );
+    this.activateSubMenu(activeMenu);
+  }
+
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, Subject, catchError, throwError } from 'rxjs';
 
 import {
   CandidateRegistrationRequest,
@@ -10,8 +10,11 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class AuthenticationService {
+export class CoreService {
   baseURL: string = 'http://localhost:8080';
+
+  private triggerMethodSubject = new Subject<void>();
+
   constructor(private http: HttpClient) {}
 
   registerCandidate(payload: CandidateRegistrationRequest): Observable<any> {
@@ -24,6 +27,14 @@ export class AuthenticationService {
     return this.http
       .post(this.baseURL + '/api/recruiters/registerRecruiter', payload)
       .pipe(catchError(this.handleError));
+  }
+
+  triggerMethod() {
+    this.triggerMethodSubject.next();
+  }
+
+  getMethodTrigger() {
+    return this.triggerMethodSubject.asObservable();
   }
 
   handleError(err: HttpErrorResponse) {
