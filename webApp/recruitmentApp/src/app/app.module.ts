@@ -9,6 +9,7 @@ import { CoreModule } from './modules/core/core.module';
 import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { SuccessPopupComponent } from './shared/components/success-popup/success-popup.component';
 import { CustomMaterialModule } from './modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,6 +21,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PagenotfoundComponent,
     HeaderComponent,
     FooterComponent,
+    SuccessPopupComponent
   ],
   imports: [
     BrowserModule,

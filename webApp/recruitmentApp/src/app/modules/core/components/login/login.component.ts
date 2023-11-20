@@ -8,7 +8,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { SuccessPopupComponent } from 'src/app/modules/shared/shared/components/success-popup/success-popup.component';
+import { SuccessPopupComponent } from 'src/app/shared/components/success-popup/success-popup.component';
 import { HardcodedAuthenticationService } from '../../service/harcoded-authentication.service';
 import {
   CandidateRegistrationRequest,

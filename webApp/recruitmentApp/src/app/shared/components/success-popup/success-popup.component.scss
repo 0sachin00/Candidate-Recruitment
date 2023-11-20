@@ -9,15 +9,6 @@
         margin-top: 0.75em;
     }
     
-    .close-icon{
-        color: #000;
-    font-size: 16px;
-    position: absolute;
-    right: 86px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    }
     .content-p{
         align-items: center;
         text-align: center;
@@ -26,4 +17,11 @@
 }
 .min-ht{
     min-height: 220px;
+}
+
+.close-icon{
+    float: right;
+    cursor: pointer;
+    color: #000;
+    font-size: 16px;
 }
