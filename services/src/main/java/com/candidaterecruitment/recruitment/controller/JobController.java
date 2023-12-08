@@ -5,6 +5,7 @@ import com.candidaterecruitment.recruitment.model.dto.postrequests.JobRequest;
 import com.candidaterecruitment.recruitment.model.dto.responsedetails.getresponsedetails.JobGetResponseDetails;
 import com.candidaterecruitment.recruitment.model.dto.getresponses.JobResponse;
 import com.candidaterecruitment.recruitment.model.entity.Job;
+import com.candidaterecruitment.recruitment.service.serviceImplementation.AppliedJobServiceImplementation;
 import com.candidaterecruitment.recruitment.service.serviceImplementation.JobServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class JobController {
     @Autowired
     private JobServiceImplementation jobServiceImplementation;
+
+    @Autowired
+    private AppliedJobServiceImplementation appliedJobServiceImplementation;
 
     @GetMapping("/allJobs")
     public ResponseEntity<JobResponse> getAllJobDetails(){
@@ -53,5 +57,4 @@ public class JobController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
 }
